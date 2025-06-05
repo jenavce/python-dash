@@ -5,7 +5,7 @@ import plotly.express as px
 import pandas as pd
 
 # Read in the data
-data = pd.read_csv("precious_metals_prices_2018_2021.csv", usecols=["DateTime", "Gold"])
+data = pd.read_csv("/workspaces/python-dash/04_02/precious_metals_prices_2018_2021.csv", usecols=["DateTime", "Gold"])
 
 # Create a plotly plot for use by dcc.Graph().
 fig = px.line(
@@ -46,6 +46,25 @@ app.layout = html.Div(
                     children=("The cost of precious metals", html.Br(), "between 2018 and 2021"),
                 ),
             ],
+        ),
+        html.Div(
+            id="menu-area",
+            children=[
+                html.Div(
+                    children=[
+                        html.Div(
+                            className="menu-title",
+                            children="Metal"
+                        ),
+                         dcc.Dropdown(
+                             id="metal-filter",
+                             className="dropdown",
+                             options=[{"label": metal, "value": metal} for metal in data.columns[1:]],
+                             clearable=False
+                         )
+                    ]
+                ),
+            ]
         ),
         html.Div(
             id="graph-container",
